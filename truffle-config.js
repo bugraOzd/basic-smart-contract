@@ -23,6 +23,8 @@
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
+var HDWalletProvider = require("truffle-hdwallet-provider");
+var mnemonic = "YOUR MNEMONIC";
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -34,6 +36,10 @@ module.exports = {
    * $ truffle test --network <network-name>
    */
 
+  api_keys: {
+    etherscan: 'API KEY'
+  },
+  plugins: ['truffle-plugin-verify'],
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
@@ -46,6 +52,14 @@ module.exports = {
       port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
     },
+    rinkeby: {
+      provider: function () {
+        return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/YOUR ID");
+      },
+      network_id: 4,
+      gas: 29000000,
+      gasPrice: 10000000000,
+    }
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
