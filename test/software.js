@@ -40,6 +40,12 @@ contract("Software", (accounts) => {
         expect(owner).to.equal(accounts[0])
       }
     })
+
+    it('owner has 10 tokens', async () => {
+      let owner = accounts[0];
+      let walletOfOwner = await software.walletOfOwner(owner)
+      expect(walletOfOwner).to.have.length(10)
+    })
   })
 
   let price = web3.utils.toBN(web3.utils.toWei('0.05', 'ether'))
@@ -85,11 +91,21 @@ contract("Software", (accounts) => {
     })
   })
 
-  describe("Trying to mint a token without paying", async () => {
+  describe("trying to mint a token without paying", async () => {
     it("fails", async () => {
       await expectRevert(
         software.mint(1),
-        "claiming a token costs 0.05 eth"
+        "Not enough value of ETH sent."
+      )
+    })
+  })
+
+  describe("trying to mint more than 10 tokens", async () => {
+    let mintAmount = 15
+    it("fails", async () => {
+      await expectRevert(
+        software.mint(mintAmount, { from: accounts[1], value: mintAmount * 15 }),
+        "You can not mint more than 10."
       )
     })
   })
