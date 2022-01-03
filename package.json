@@ -1,0 +1,21 @@
+{
+  "name": "softwarecontract",
+  "version": "1.0.0",
+  "description": "Project for software validation and verification",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bugra Ozdilek",
+  "license": "ISC",
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.15",
+    "truffle": "^5.4.17"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.3.2",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.3.2"
+  }
+}
