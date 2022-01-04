@@ -111,12 +111,28 @@ contract("Software", (accounts) => {
   })
 
   describe("trying admin mint", async () => {
-    let mintAmount = 50000
-    it("fails", async () => {
+
+    it("fails, you can not mint more than the max supply.", async () => {
       await expectRevert(
-        software.adminMint(mintAmount, { from: accounts[0] }),
+        software.adminMint(50000, { from: accounts[0] }),
         "You can not mint more than the max supply."
       )
+    })
+
+    it("fails, caller is not the owner", async () => {
+      await expectRevert(
+        software.adminMint(3, { from: accounts[1] }),
+        "Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner."
+      )
+    })
+
+    it("mints 15 tokens to owner in total owner has 25 tokens", async () => {
+      reciept = await software.adminMint(15, { from: accounts[0] })
+      transaction = await web3.eth.getTransaction(reciept.tx)
+
+      let owner = accounts[0];
+      let walletOfOwner = await software.walletOfOwner(owner)
+      expect(walletOfOwner).to.have.length(25)
     })
   })
 })
