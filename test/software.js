@@ -31,7 +31,7 @@ contract("Software", (accounts) => {
 
     it("has a base URI", async () => {
       let baseURI = await software.tokenURI(1)
-      expect(baseURI).to.equal("https://drive.google.com/file/d/1BPmbSFgZ92NukrtBT3PI3r0tDzB8XzFF/view?usp=sharing1")
+      expect(baseURI).to.equal("https://bafkreiaykthd62x3l5dnr626otmuhtwrblrr6p3leg6lwva4h2hyjmf5ze.ipfs.dweb.link/1")
     })
 
     it("mints 10 token to owner", async () => {
@@ -106,6 +106,16 @@ contract("Software", (accounts) => {
       await expectRevert(
         software.mint(mintAmount, { from: accounts[1], value: mintAmount * 15 }),
         "You can not mint more than 10."
+      )
+    })
+  })
+
+  describe("trying admin mint", async () => {
+    let mintAmount = 50000
+    it("fails", async () => {
+      await expectRevert(
+        software.adminMint(mintAmount, { from: accounts[0] }),
+        "You can not mint more than the max supply."
       )
     })
   })

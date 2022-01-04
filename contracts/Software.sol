@@ -15,7 +15,7 @@ contract Software is ERC721Enumerable, Ownable {
 
     constructor() ERC721("Software", "SEN") {
         setBaseURI(
-            "https://drive.google.com/file/d/1BPmbSFgZ92NukrtBT3PI3r0tDzB8XzFF/view?usp=sharing"
+            "https://bafkreiaykthd62x3l5dnr626otmuhtwrblrr6p3leg6lwva4h2hyjmf5ze.ipfs.dweb.link/"
         );
         ownerMint(10);
     }
@@ -77,5 +77,19 @@ contract Software is ERC721Enumerable, Ownable {
 
     function withdraw() public payable onlyOwner {
         require(payable(msg.sender).send(address(this).balance));
+    }
+
+    function adminMint(uint256 mintAmount) public payable onlyOwner {
+        require(isSaleActive, "Sale is paused.");
+        require(
+            mintAmount > 0 && mintAmount <= MAX_SUPPLY,
+            "You can not mint more than the max supply."
+        );
+
+        uint256 supply = totalSupply();
+
+        for (uint256 i = 1; i <= mintAmount; i++) {
+            _safeMint(msg.sender, supply + i);
+        }
     }
 }
