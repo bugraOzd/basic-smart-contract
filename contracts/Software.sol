@@ -14,9 +14,7 @@ contract Software is ERC721Enumerable, Ownable {
     bool isSaleActive = true;
 
     constructor() ERC721("Software", "SEN") {
-        setBaseURI(
-            "https://bafkreiaykthd62x3l5dnr626otmuhtwrblrr6p3leg6lwva4h2hyjmf5ze.ipfs.dweb.link/"
-        );
+        setBaseURI("BASE_URI");
         ownerMint(10);
     }
 

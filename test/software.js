@@ -1,4 +1,4 @@
-const { assert, expect } = require("chai");
+const { expect } = require("chai");
 const { expectRevert } = require('@openzeppelin/test-helpers');
 
 const SoftwareToken = artifacts.require("Software");
@@ -31,7 +31,7 @@ contract("Software", (accounts) => {
 
     it("has a base URI", async () => {
       let baseURI = await software.tokenURI(1)
-      expect(baseURI).to.equal("https://bafkreiaykthd62x3l5dnr626otmuhtwrblrr6p3leg6lwva4h2hyjmf5ze.ipfs.dweb.link/1")
+      expect(baseURI).to.equal("BASE_URI/1")
     })
 
     it("mints 10 token to owner", async () => {
